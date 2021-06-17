@@ -64,12 +64,13 @@ class ViewController: UIViewController {
     func emoji(for card:Card, at emojiIndex:Int)-> String{
         print("beforecount: \(emojiSet[emojiIndex].count)")
         if emoji[card.identifier] == nil, emojiSet[emojiIndex].count > 0{
-            let randomIndex = Int(arc4random_uniform(UInt32(emojiSet[emojiIndex].count)))
-            print("hi: \(emoji[card.identifier]), count: \(emojiSet[emojiIndex].count)")
-            emoji[card.identifier] = emojiSet[emojiIndex].remove(at: randomIndex)
+//            let randomIndex = Int(arc4random_uniform(UInt32(emojiSet[emojiIndex].count)))
+            emoji[card.identifier] = emojiSet[emojiIndex].remove(at: emojiSet[emojiIndex].count.arc4random)
         }
         return emoji[card.identifier] ?? "?"
     }
+    
+  
     
     var emojiIndex = 0
     
@@ -94,6 +95,18 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+    }
+}
+
+extension Int {
+    var arc4random:Int {
+        if self > 0 {
+            return Int(arc4random_uniform(UInt32(self)))
+        } else if self < 0 {
+            return -Int(arc4random_uniform(UInt32(abs(self))))
+        }else {
+            return 0
+        }
     }
 }
 
