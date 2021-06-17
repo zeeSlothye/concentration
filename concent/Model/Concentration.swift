@@ -7,7 +7,7 @@
 
 import Foundation
 class Concentration{
-    var cards = [Card]()
+    private(set) var cards = [Card]()
     
     //card pair의 수를 받아와 카드 생성 후 array에 대입
     init (numberOfPairsOfCards:Int){
@@ -17,7 +17,6 @@ class Concentration{
         }
         //cards의 배열 순서를 무작위로 바꾼다.
         shuffle()
-
     }
     
     func shuffle(){
@@ -27,7 +26,7 @@ class Concentration{
         }
     }
     
-    var indexOfOneAndOnlyFaceUpCard:Int? {
+    private var indexOfOneAndOnlyFaceUpCard:Int? {
         get {
             var foundIndex: Int?
             for index in cards.indices{
@@ -54,6 +53,7 @@ class Concentration{
     
     //toggle isFaceUP
     func chooseCard(at index: Int){
+        assert(cards.indices.contains(index), "Concentration.chooseCard (at: \(index)): chosen index not in the cards")
         if !cards[index].isMatched{
             if let matchIndex = indexOfOneAndOnlyFaceUpCard, matchIndex != index{
                 //matched
