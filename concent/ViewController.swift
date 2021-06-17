@@ -110,7 +110,7 @@ class ViewController: UIViewController {
             emoji[game.cards[card].identifier] = nil
             game.cards[card].flippedCount = 0
         }
-        updateViewFromModel() //reset card state
+        updateViewFromModel() //reset card state 이걸 해줘야 new State누르면 카드가 다 뒤집힌 상태로 시작함.
         game.shuffle()//shuffle
         currentScore = 0
     }
