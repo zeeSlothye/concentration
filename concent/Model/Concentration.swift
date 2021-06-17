@@ -27,7 +27,30 @@ class Concentration{
         }
     }
     
-    var indexOfOneAndOnlyFaceUpCard:Int?
+    var indexOfOneAndOnlyFaceUpCard:Int? {
+        get {
+            var foundIndex: Int?
+            for index in cards.indices{
+                //해당 카드가 앞면일 경우, 앞면인 카드를 찾게됨.
+                if cards[index].isFaceUp {
+                    //앞면인
+                    if foundIndex == nil {
+                        foundIndex = index
+                    }//앞면인 카드를 한번 더 찾는다. => only one이 앞면이 아니므로 return nil
+                    else{
+                        return nil
+                    }
+                }
+            }
+            return foundIndex
+        }
+        //모든 카드를 살펴본 후 newValue에 대한 카드를 제외하고 전부 뒤집는다.
+        set{
+            for index in cards.indices{
+                cards[index].isFaceUp = (index == newValue) //index가 newVaue와 같을때만 true
+            }
+        }
+    }
     
     //toggle isFaceUP
     func chooseCard(at index: Int){
@@ -39,12 +62,12 @@ class Concentration{
                     cards[index].isMatched = true
                 }
                 cards[index].isFaceUp = true
-                indexOfOneAndOnlyFaceUpCard = nil
+// index를 computed로               indexOfOneAndOnlyFaceUpCard = nil
             }else{ //no face, two face
-                for flipDownIndex in cards.indices{
-                    cards[flipDownIndex].isFaceUp = false
-                }
-                cards[index].isFaceUp = true
+//                for flipDownIndex in cards.indices{
+//                    cards[flipDownIndex].isFaceUp = false
+//                }
+//                cards[index].isFaceUp = true
                 indexOfOneAndOnlyFaceUpCard = index
             }
         }
