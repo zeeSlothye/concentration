@@ -11,31 +11,50 @@ class ViewController: UIViewController {
     
     private lazy var game: Concentration = Concentration(numberOfPairsOfCards: numberOfPairsOfCards)
     
-    var numberOfPairsOfCards: Int{
+    private var numberOfPairsOfCards: Int{
         return (cardButtons.count+1)/2
     }
     
     
     private(set) var flipCount: Int = 0{
         didSet{
-            flipCountLabel.text = "Flip Card: \(flipCount)"
+            flipCountLabel.text = "Flip: \(flipCount)"
         }
     }
     
+    private var currentScore: Int = 0{
+        didSet{
+            score.text = "Score: \(currentScore)"
+        }
+    }
+
+
     @IBOutlet private weak var flipCountLabel: UILabel!
+    
+    @IBOutlet private weak var score: UILabel!
     
     @IBOutlet private var cardButtons: [UIButton]!
 
     @IBAction private func touchCard(_ sender: UIButton) {
         flipCount += 1
-        
         if let cardNumber = cardButtons.firstIndex(of:sender){
             game.chooseCard(at: cardNumber) //control isFaceup
+            scoring(at: cardNumber)
             updateViewFromModel()
         }else{
             print("chosen card was not in cardButtons")
         }
     }
+    
+    private func scoring(at cardNumber: Int){
+        game.cards[cardNumber].flippedCount += 1
+        if game.cards[cardNumber].isMatched == true{ // add score if it is matched
+            self.currentScore += 2
+        }else if game.cards[cardNumber].flippedCount >= 2{
+            self.currentScore -= 1
+        }
+    }
+
     
     private func updateViewFromModel(){
         for index in cardButtons.indices{
@@ -63,15 +82,12 @@ class ViewController: UIViewController {
     private var emoji = [Int:String]()
 
     private func emoji(for card:Card, at emojiIndex:Int)-> String{
-        print("beforecount: \(emojiSet[emojiIndex].count)")
         if emoji[card.identifier] == nil, emojiSet[emojiIndex].count > 0{
-//            let randomIndex = Int(arc4random_uniform(UInt32(emojiSet[emojiIndex].count)))
             emoji[card.identifier] = emojiSet[emojiIndex].remove(at: emojiSet[emojiIndex].count.arc4random)
         }
-        return emoji[card.identifier] ?? "?"
+        return emoji[card.identifier] ?? "startNew"
     }
     
-  
     
     private var emojiIndex = 0
     
@@ -88,15 +104,12 @@ class ViewController: UIViewController {
             game.cards[card].isFaceUp = false
             game.cards[card].isMatched = false
             emoji[game.cards[card].identifier] = nil
+            game.cards[card].flippedCount = 0
         }
-        updateViewFromModel() //reset card state
-        game.shuffle()//shuffle
+        updateViewFromModel() //reset card state 이걸 해줘야 new State누르면 카드가 다 뒤집힌 상태로 시작함.
+        currentScore = 0
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do any additional setup after loading the view.
-    }
 }
 
 extension Int {

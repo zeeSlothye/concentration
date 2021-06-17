@@ -7,7 +7,7 @@
 
 import Foundation
 class Concentration{
-    private(set) var cards = [Card]()
+    var cards = [Card]()
     
     //card pair의 수를 받아와 카드 생성 후 array에 대입
     init (numberOfPairsOfCards:Int){
@@ -19,7 +19,7 @@ class Concentration{
         shuffle()
     }
     
-    func shuffle(){
+    private func shuffle(){
         for _ in 0...cards.count{
             let randomIndex = Int(arc4random_uniform(UInt32(cards.count)))
             cards += [cards.remove(at: randomIndex)]
@@ -62,14 +62,10 @@ class Concentration{
                     cards[index].isMatched = true
                 }
                 cards[index].isFaceUp = true
-// index를 computed로               indexOfOneAndOnlyFaceUpCard = nil
             }else{ //no face, two face
-//                for flipDownIndex in cards.indices{
-//                    cards[flipDownIndex].isFaceUp = false
-//                }
-//                cards[index].isFaceUp = true
                 indexOfOneAndOnlyFaceUpCard = index
             }
         }
     }
+    
 }
