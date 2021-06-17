@@ -281,7 +281,7 @@
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="gie-xp-22Y">
                                 <rect key="frame" x="20" y="746" width="374" height="36"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Flip Card : 0" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jal-YE-teN">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Flip : 0" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jal-YE-teN">
                                         <rect key="frame" x="0.0" y="0.0" width="183" height="36"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="30"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -314,6 +314,7 @@
                     </view>
                     <connections>
                         <outlet property="flipCountLabel" destination="jal-YE-teN" id="Hm0-66-ubp"/>
+                        <outlet property="score" destination="Spm-HC-jnm" id="j2d-Dw-Se2"/>
                         <outletCollection property="cardButtons" destination="0mC-n6-0ue" collectionClass="NSMutableArray" id="glc-fW-CAT"/>
                         <outletCollection property="cardButtons" destination="Mgq-mk-Gcj" collectionClass="NSMutableArray" id="xIc-rd-Xio"/>
                         <outletCollection property="cardButtons" destination="bQg-u4-pvg" collectionClass="NSMutableArray" id="qKV-2m-Il2"/>

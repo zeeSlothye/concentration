@@ -10,6 +10,7 @@ struct Card{
     var isFaceUp = false
     var isMatched = false
     var identifier: Int
+    var flippedCount = 0
     
     private static var identifierFactory:Int = 0
     private static func getUniqueIdentifier()->Int{
