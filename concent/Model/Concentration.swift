@@ -28,20 +28,22 @@ struct Concentration{
     
     private var indexOfOneAndOnlyFaceUpCard:Int? {
         get {
-            var foundIndex: Int?
-            for index in cards.indices{
-                //해당 카드가 앞면일 경우, 앞면인 카드를 찾게됨.
-                if cards[index].isFaceUp {
-                    //앞면인
-                    if foundIndex == nil {
-                        foundIndex = index
-                    }//앞면인 카드를 한번 더 찾는다. => only one이 앞면이 아니므로 return nil
-                    else{
-                        return nil
-                    }
-                }
-            }
-            return foundIndex
+            let faceUpCardIndices = cards.indices.filter {cards[$0].isFaceUp} //isFaceUp이 true인 index의 배열.
+            return faceUpCardIndices.count == 1 ? faceUpCardIndices.first : nil
+//            var foundIndex: Int?
+//            for index in cards.indices{
+//                //해당 카드가 앞면일 경우, 앞면인 카드를 찾게됨.
+//                if cards[index].isFaceUp {
+//                    //앞면인
+//                    if foundIndex == nil {
+//                        foundIndex = index
+//                    }//앞면인 카드를 한번 더 찾는다. => only one이 앞면이 아니므로 return nil
+//                    else{
+//                        return nil
+//                    }
+//                }
+//            }
+//            return foundIndex
         }
         //모든 카드를 살펴본 후 newValue에 대한 카드를 제외하고 전부 뒤집는다.
         set{
@@ -69,3 +71,4 @@ struct Concentration{
     }
     
 }
+
