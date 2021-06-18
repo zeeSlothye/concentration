@@ -18,8 +18,16 @@ class ViewController: UIViewController {
     
     private(set) var flipCount: Int = 0{
         didSet{
-            flipCountLabel.text = "Flip: \(flipCount)"
+            updateFlipCountLabel()
         }
+    }
+    private func updateFlipCountLabel(){
+            let attributes: [NSAttributedString.Key: Any] = [
+                .strokeColor: UIColor.white,
+                .strokeWidth: 5.0,
+            ]
+            let attributedString = NSAttributedString(string:"Flip: \(flipCount)", attributes: attributes )
+            flipCountLabel.attributedText = attributedString
     }
     
     private var currentScore: Int = 0{
@@ -29,7 +37,11 @@ class ViewController: UIViewController {
     }
 
 
-    @IBOutlet private weak var flipCountLabel: UILabel!
+    @IBOutlet private weak var flipCountLabel: UILabel!{
+        didSet{
+            updateFlipCountLabel()
+        }
+    }
     
     @IBOutlet private weak var score: UILabel!
     
@@ -70,20 +82,21 @@ class ViewController: UIViewController {
         }
     }
     
-    private lazy var emojiSet:[[String]] = [emojiChoices0, emojiChoices1,emojiChoices2,emojiChoices3,emojiChoices4,emojiChoices5]
-    private  var emojiChoices0: Array<String> = ["👻", "🎃", "🍭","🍫","🍩","🍪","🍬", "👠","🧛🏿‍♂️","🧟‍♀️"]
-    private var emojiChoices1: Array<String> = ["😍","🤪","🥸","😎","😡","🥶","🤢","👿","😶‍🌫️","🤯","🤬"]
-    private var emojiChoices2: Array<String> = ["🍏","🍎","🍊","🍋","🍉","🍇","🍓","🫐","🍒","🍑","🌰","🍌"]
-    private var emojiChoices3: Array<String> = ["🥭","🥝","🍅","🍆","🥦","🥬","🌶","🌽","🫑","🍠","🥔","🍳","🥩"]
-    private var emojiChoices4: Array<String> = ["❤️","🧡","💛","💚","💙","💜","🖤","🤍","🤎","💖","💔","👩‍❤️‍👨","👩🏼‍❤️‍💋‍👩🏿","👅"]
-    private var emojiChoices5: Array<String> = ["⚽️","🏀","🏈","🥎","🏉","🥏","🏓","🪀","🏏","🥊","🛼","🏵","🎟","🎖","🚵‍♀️"]
+    private lazy var emojiSet:[String] = [emojiChoices0, emojiChoices1,emojiChoices2,emojiChoices3,emojiChoices4,emojiChoices5]
+    private  var emojiChoices0 = "👻🎃🍭🍫🍩🍪🍬👠🧛🏿‍♂️🧟‍♀️"
+    private var emojiChoices1 = "😍🤪🥸😎😡🥶🤢👿😶‍🌫️🤯🤬"
+    private var emojiChoices2 = "🍏🍎🍊🍋🍉🍇🍓🫐🍒🍑🌰🍌"
+    private var emojiChoices3 = "🥭🥝🍅🍆🥦🥬🌶🌽🫑🍠🥔🍳🥩"
+    private var emojiChoices4 = "❤️🧡💛💚💙💜🖤🤍🤎💖💔👩‍❤️‍👨👩🏼‍❤️‍💋‍👩🏿👅"
+    private var emojiChoices5 = "⚽️🏀🏈🥎🏉🥏🏓🪀🏏🥊🛼🏵🎟🎖🚵‍♀️"
 
     
     private var emoji = [Card:String]()
 
     private func emoji(for card:Card, at emojiIndex:Int)-> String{
         if emoji[card] == nil, emojiSet[emojiIndex].count > 0{
-            emoji[card] = emojiSet[emojiIndex].remove(at: emojiSet[emojiIndex].count.arc4random)
+            let randomStringIndex = emojiSet[emojiIndex].index(emojiSet[emojiIndex].startIndex, offsetBy: emojiSet[emojiIndex].count.arc4random)
+            emoji[card] = String(emojiSet[emojiIndex].remove(at: randomStringIndex))
         }
         return emoji[card] ?? "startNew"
     }
