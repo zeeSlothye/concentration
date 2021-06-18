@@ -6,7 +6,7 @@
 //
 
 import Foundation
-class Concentration{
+struct Concentration{
     var cards = [Card]()
     
     //card pair의 수를 받아와 카드 생성 후 array에 대입
@@ -19,7 +19,7 @@ class Concentration{
         shuffle()
     }
     
-    private func shuffle(){
+    private mutating func shuffle(){
         for _ in 0...cards.count{
             let randomIndex = Int(arc4random_uniform(UInt32(cards.count)))
             cards += [cards.remove(at: randomIndex)]
@@ -52,7 +52,7 @@ class Concentration{
     }
     
     //toggle isFaceUP
-    func chooseCard(at index: Int){
+    mutating func chooseCard(at index: Int){
         assert(cards.indices.contains(index), "Concentration.chooseCard (at: \(index)): chosen index not in the cards")
         if !cards[index].isMatched{
             if let matchIndex = indexOfOneAndOnlyFaceUpCard, matchIndex != index{
