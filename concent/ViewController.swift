@@ -79,13 +79,13 @@ class ViewController: UIViewController {
     private var emojiChoices5: Array<String> = ["⚽️","🏀","🏈","🥎","🏉","🥏","🏓","🪀","🏏","🥊","🛼","🏵","🎟","🎖","🚵‍♀️"]
 
     
-    private var emoji = [Int:String]()
+    private var emoji = [Card:String]()
 
     private func emoji(for card:Card, at emojiIndex:Int)-> String{
-        if emoji[card.identifier] == nil, emojiSet[emojiIndex].count > 0{
-            emoji[card.identifier] = emojiSet[emojiIndex].remove(at: emojiSet[emojiIndex].count.arc4random)
+        if emoji[card] == nil, emojiSet[emojiIndex].count > 0{
+            emoji[card] = emojiSet[emojiIndex].remove(at: emojiSet[emojiIndex].count.arc4random)
         }
-        return emoji[card.identifier] ?? "startNew"
+        return emoji[card] ?? "startNew"
     }
     
     
@@ -103,7 +103,7 @@ class ViewController: UIViewController {
         for card in cardButtons.indices{
             game.cards[card].isFaceUp = false
             game.cards[card].isMatched = false
-            emoji[game.cards[card].identifier] = nil
+            emoji[game.cards[card]] = nil
             game.cards[card].flippedCount = 0
         }
         updateViewFromModel() //reset card state 이걸 해줘야 new State누르면 카드가 다 뒤집힌 상태로 시작함.
